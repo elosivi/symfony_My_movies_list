@@ -1,0 +1,11 @@
+index:
+   path: /
+   methods: GET
+
+app_logout:
+    path: /logout
+    methods: GET
+
+admin:
+    path: /admin
+    methods: GET    

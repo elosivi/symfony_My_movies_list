@@ -1,0 +1,11 @@
+easy_admin:
+  
+  user:
+    display_name: true
+    
+  
+  entities:
+       # List the entity class name you want to manage
+       - App\Entity\User
+       - App\Entity\Listing
+       - App\Entity\Movie

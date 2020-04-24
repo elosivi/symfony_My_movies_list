@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}My Movies! LOGIN{% endblock %}
+
+
+
+    {# ------------------------------------------------------------- H 1 ----------------------------------------------------------------------------------------- #}
+
+{% block h1 %}
+    
+        <h1 class="font-weight-bold"> LOGIN </h1>
+
+{% endblock %}
+    
+
+
+    {# ------------------------------------------------------------- B O D Y ----------------------------------------------------------------------------------------- #}
+
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+    
+    <section class="shadow-lg background-color:white">
+        <div style="height:100px;"></div>
+
+        <div class="form-row align-items-center ">
+            <div class="col-md-5 offset-md-3">
+                 <div class="container">
+                        <form action="{{ path('login') }}" method="post">
+                            <div class="form-group">
+                                <label for="email">Your Username :</label>
+                                <input type="text" name="_username" placeholder="Your Username" style="padding:3px;">
+                                <small id="emailHelp" class="form-text text-muted"></small>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="password">Your password</label>
+                                 <input type="password" name="_password" style="padding:3px";>
+                            
+                            </div><br>
+                            
+                            <button type="submit" class="btn btn-primary" name="submit" style="font-family: 'Bangers', cursive;">Log in</button><br><br><br>
+                        </form>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="{{ path('register') }}" style="font-family: 'Bangers', cursive;">New around here? Sign up</a>
+                    {# <a class="dropdown-item" href="#">Forgot password?</a> #}
+                    </div>
+                     <div style="height:100px;"></div>
+                </div>
+            </div>
+        </div>
+
+       
+
+    </section>
+    
+</div>
+{% endblock %}

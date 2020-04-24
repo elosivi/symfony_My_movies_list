@@ -1,0 +1,101 @@
+
+{% extends 'base.html.twig' %}
+
+{% block title %}My Movies! FILMS LIST{% endblock %}
+
+
+
+    {# ------------------------------------------------------------- H 1 ----------------------------------------------------------------------------------------- #}
+
+{% block h1 %}
+    
+    <h1 class="font-weight-bold"> FILMS LIST FOR {{ user }}</h1>
+
+
+    {# -------------------- add list button -------------------- #}
+    
+        <button type="button" class="btn btn-warning btn-lg active" data-toggle="collapse" data-target="#add_list">ADD NEW LIST</button>
+        <div class="collapse" id="add_list">
+            <div>
+                <form action="/lists" method="post">
+                    <input type="text" name="new_list_name" id="new_list_name" placeholder="List name">
+                    <button type="submit" class="btn btn-secondary btn-lg active" name="add_list">ADD LIST</button>
+                </form>
+            </div>
+        </div>
+    
+    {# -------------------- end add list button -------------------- #}
+
+    {% if listings %}
+        <ul class="list-unstyled">
+        {% for listing in listings %}
+            <li>
+
+                {# -------------------- action button group -------------------- #}
+                <div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Toolbar for list">
+                    
+                    {% if user.id == listing.owner_id%}
+                    <button type="button" class="btn btn-primary btn-lg active" data-toggle="collapse" data-target="#display{{listing.id}}">{{ listing.title }} (owner)</button>
+                    {% else %}
+                    <button type="button" class="btn btn-primary btn-lg active" data-toggle="collapse" data-target="#display{{listing.id}}">{{ listing.title }}</button>
+                    {% endif %}
+                    <a class="btn btn-primary" href="remove/{{listing.id}}" role="button">Remove</a>
+                    <button type="button" class="btn btn-primary btn-lg active" data-toggle="collapse" data-target="#display_friend{{listing.id}}">Share with</button>
+                    {# <a class="btn btn-primary" href="share/{{friend.id}}" role="button">Share</a> #}
+
+                </div>
+                {# -------------------- end action button group -------------------- #}
+
+                <div id="display_friend{{listing.id}}" class="collapse">
+                    {# -------------------- show friends -------------------- #}
+                    <ul class="list-unstyled">
+                        {% for friend in friends %}
+                        <li><a class="btn btn-primary" href="share/{{listing.id}}/{{friend.id}}" role="button">{{friend.name}}</a></li>
+                        {% endfor %}
+                    </ul>
+                    {# -------------------- end show friends -------------------- #}
+                </div>
+
+                <div id="display{{listing.id}}" class="collapse">
+                    <div class="container">
+                        <div class="row" style="margin:auto; ">
+                        {% for movie in listing.movies %}
+
+                            {# -------------------- bootstrap card -------------------- #}
+                            <div class="card col-sm-3 shadow-lg" style="padding:10px; margin : 10px;">
+                            {# <div class="card" style="width: 18rem;" class="col"> #}
+                                {% if movie.poster %}
+                                <img class="card-img-top" src="{{movie.poster}}" alt="Card image cap">
+                                {% else %}
+                                <img class="card-img-top" src="http://via.placeholder.com/300x423" alt="Card image cap">
+                                {% endif %}
+                                <div class="card-body">
+                                    <h5 class="card-title">{{movie.title}}</h5>
+                                    <p class="card-text">Year : {{movie.year}}</p>
+                                    <p class="card-text">Imdb : {{movie.imdb_id}}</p>
+                                    <a href="movie/{{movie.id}}" class="btn btn-primary">View</a>
+                                    <a href="removefromlist/{{listing.id}}/{{movie.id}}" class="btn btn-primary">Remove</a>
+                                </div>
+                            </div>
+                            {# -------------------- end of bootstrap card -------------------- #}
+
+                        {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </li>
+        {% endfor %}
+        <ul>
+    {% else %}
+        <h2> No list found for {{ user }} </h2>
+    {% endif %}
+
+{% endblock %}
+    
+
+
+    {# ------------------------------------------------------------- B O D Y ----------------------------------------------------------------------------------------- #}
+
+
+{% block body %}
+{% endblock %}

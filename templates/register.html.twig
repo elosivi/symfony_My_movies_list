@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}My Movies! REGISTER{% endblock %}
+
+
+
+    {# ------------------------------------------------------------- H 1 ----------------------------------------------------------------------------------------- #}
+
+{% block h1 %}
+    
+        <h1 class="font-weight-bold"> REGISTER </h1>
+
+{% endblock %}
+    
+
+
+    {# ------------------------------------------------------------- B O D Y ----------------------------------------------------------------------------------------- #}
+
+{% block body %}
+    
+
+  {# {{ error.get() | raw }} #}
+    <div class="container register-form shadow-lg p-3 mb-5 bg-white rounded">
+     <div style="height:30px;"></div>
+       
+        <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+            {{ form_start(registrationForm) }}
+            <form action="" name="sentMessage" id="contactForm" method="post" novalidate>
+            <div class="control-group">
+                <div class="form-group floating-label-form-group controls">
+                
+                {{ form_row(registrationForm.name) }}
+                <p class="help-block text-danger"></p>
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="form-group floating-label-form-group controls">
+                {{ form_row(registrationForm.email) }}
+                <p class="help-block text-danger"></p>
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="form-group col-xs-12 floating-label-form-group controls">
+                {{ form_row(registrationForm.plainPassword.first) }}
+                <p class="help-block text-danger"></p>
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="form-group col-xs-12 floating-label-form-group controls">
+                {{ form_row(registrationForm.plainPassword.second) }}
+                
+                <p class="help-block text-danger"></p>
+                </div>
+            </div>
+            {{ form_row(registrationForm.agreeTerms) }}
+            <div id="success" style="height:20px;"></div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-secondary" id="sendMessageButton" style="font-family: 'Bangers', cursive;">Register</button>
+            </div>
+            {{ form_end(registrationForm) }}
+            </form>
+            
+        </div>
+        </div>
+
+    </div>
+
+
+
+    
+</div>
+{% endblock %}

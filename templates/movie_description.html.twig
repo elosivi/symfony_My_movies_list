@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}My Movies! FILMS LIST{% endblock %}
+
+
+
+    {# ------------------------------------------------------------- H 1 ----------------------------------------------------------------------------------------- #}
+  {# ------------------------------------------------------------- B O D Y ----------------------------------------------------------------------------------------- #}
+{% block body %}
+    
+    
+    
+    {# -------------------- bootstrap card -------------------- #}
+    
+    <div class="shadow-lg" style="padding:20px ">
+
+        <div class="media" style="padding:20px;">
+            
+            {% if movie.Poster %}
+            <img class="card-img-top mr-3" src="{{movie.Poster}}" alt="Card image cap" style="width:250px;">
+            {% else %}
+            <img class="card-img-top mr-3" src="http://via.placeholder.com/300x423" alt="Card image cap">
+            {% endif %}
+
+            <div class="media-body">
+                <h2 class="card-title" style="font-family: 'Bangers', cursive; letter-spacing: 2px; color:rgb(0,105,217)">{{movie.Title}}</h2>
+                <div style="height:2px; background-color:rgba(26,62,242,0.8); width:70%; margin-bottom:30px; "> </div>
+                <p class="card-text"><span style="font-weight:bold; font-family: 'Bangers', cursive; letter-spacing: 2px; background-color:rgba(200,200,200,1); padding:5px; border-radius:2px;">Year :</span> {{movie.Year}}</p>
+                <p class="card-text"><span style="font-weight:bold; font-family: 'Bangers', cursive; letter-spacing: 2px; background-color:rgba(200,200,200,1); padding:5px; border-radius:2px;">Runtime :</span>  {{movie.Runtime}}</p>
+                <p class="card-text"><span style="font-weight:bold; font-family: 'Bangers', cursive; letter-spacing: 2px; background-color:rgba(200,200,200,1); padding:5px; border-radius:2px;">Genre :</span> {{movie.Genre}}</p>
+                <p class="card-text"><span style="font-weight:bold; font-family: 'Bangers', cursive; letter-spacing: 2px; background-color:rgba(200,200,200,1); padding:5px; border-radius:2px;">Director :</span> {{movie.Director}}</p>
+                <p class="card-text"><span style="font-weight:bold; font-family: 'Bangers', cursive; letter-spacing: 2px; background-color:rgba(200,200,200,1); padding:5px; border-radius:2px;">Writer :</span> {{movie.Writer}}</p>
+                <p class="card-text"><span style="font-weight:bold; font-family: 'Bangers', cursive; letter-spacing: 2px; background-color:rgba(200,200,200,1); padding:5px; border-radius:2px;">Actors :</span> {{movie.Actors}}</p>
+                <p class="card-text"><span style="font-weight:bold; font-family: 'Bangers', cursive; letter-spacing: 2px; background-color:rgba(200,200,200,1); padding:5px; border-radius:2px;">Rating :</span> {{movie.imdbRating}}</p>
+            
+
+            <form action="search_post" method="POST">
+                <input type="hidden" name="poster" value="{{movie.Poster}}">
+                <input type="hidden" name="title" value="{{movie.Title}}">
+                <input type="hidden" name="year" value="{{movie.Year}}">
+                <input type="hidden" name="imdb_id" value="{{movie.imdbID}}">
+
+            {% if user_lists is defined %}    
+                <select name ="lists" style="margin-left:20px; border:0px; padding:9px; border-radius:5px">
+                                    {% for i in user_lists %}
+                                        <option value="{{ i.id }}">{{ i.title }}</option>
+                                    {% endfor %}
+                                    </select>
+                <button type="submit" class="btn text-primary" name="add_list" style="font-family: 'Bangers', cursive; letter-spacing: 2px;">Add to list</button>
+            {% endif %}
+            
+            </form>
+           </div> 
+        </div>
+        <div style="height:2px; background-color:rgba(26,62,242,0.8); width:70%; margin-bottom:30px; margin:0 auto 20px auto; "> </div>
+        <p class="card-text" style="color:rgba(26,62,242,0.8); padding:10px;  background-color:rgba(200,200,200,1); padding:10px; border-radius:4px;"><span style="font-weight:bold; font-family: 'Bangers', cursive; letter-spacing: 2px;">Plot :</span><br> {{movie.Plot}}</p>
+    </div>
+    {# -------------------- end of bootstrap card -------------------- #}
+
+{% endblock %}
+    
+
+
+  
+
+
+

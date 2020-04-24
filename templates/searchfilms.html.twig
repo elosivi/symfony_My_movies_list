@@ -1,0 +1,95 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}My Movies! FILMS LIST{% endblock %}
+
+
+
+
+
+    {# ------------------------------------------------------------- H 1 ----------------------------------------------------------------------------------------- #}
+
+{% block h1 %}
+        <h1 class="font-weight-bold"> FILMS LIST </h1>
+{% endblock %}
+    {# ------------------------------------------------------------- B O D Y ----------------------------------------------------------------------------------------- #}
+    {# ------------------------------------------------------------- S E A R C H      B A R ----------------------------------------------------------------------------------------- #}
+{% block body %}
+    <form class="form-inline my-2 my-lg-0" method="POST" action="{{ path('search') }}">
+            <input name="searchByTitle" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-primary my-2 my-sm-0" type="submit">Search</button>
+    </form>
+    <div style="height:30px;"></div>
+  {# ---------------------- F I L M S   L I S T  A C C O R D I N G   T O    T H E    S E A R C H    B A R  ----------------------------------------------------------------------------------------- #}
+    
+    {# if input empty #}
+    <p style="color:red">{{mess}}</p> 
+{% endblock %}
+
+
+{% block body2 %}
+    {# if input not empty #}
+
+    <div class="row"  style="margin:auto; justify_content:space-around;">
+
+        {% for movie in movies %}
+
+            {# -------------------- bootstrap card NEWVIEW-------------------- #}
+     
+                <div class="card col-3 shadow-lg" style="width: 18rem; margin-bottom: 5px; padding: 5px;">
+                     <form action="search_post" method="POST">
+                    <div class="d-flex flex-row">
+
+                        <div class="p-2">
+                            <input type="hidden" name="poster" value="{{movie.Poster}}">
+                            {% if movie.Poster %}
+                            <img class="card-img-top" src="{{movie.Poster}}" alt="Card image cap" style="width:100px;">
+                            {% else %}
+                            <img class="card-img-top" src="http://via.placeholder.com/300x423" alt="Card image cap" style="width:100px;">
+                            {% endif %}
+                        </div>
+
+                        <div class="card-body p-2" style="display:block; width:65%;">
+                            <input type="hidden" name="title" value="{{movie.Title}}">
+                            <h5 class="card-title" style="font-weight:bold; text-align:center">{{movie.Title}}</h5>
+                            <div style="height:1px; background-color:rgba(26,62,242,0.8); width:70%; margin:5px auto; "> </div>
+                            <div style="height:1px; width:70%; margin:5px auto; "> </div>
+                            <input type="hidden" name="year" value="{{movie.Year}}">
+                            <p class="card-text"><span style="font-weight:bold">Year : </span>{{movie.Year}}</p>
+                            <input type="hidden" name="imdb_id" value="{{movie.imdbID}}">
+                            <p class="card-text"><span style="font-weight:bold">Imdb : </span>{{movie.imdbID}}</p>
+                        </div>
+                    </div>
+
+                    <div style="height:10px;"></div>
+
+                    <div style="background:linear-gradient(70deg,rgba(120,120,120,0.7), rgba(200,200,200,0.7)); padding:10px; border-radius:5px">
+                        <div style="text-align:center; margin-bottom:10px;">
+                            <a href="movie_api/{{ movie.imdbID }}" class="btn text-primary" style="font-family: 'Bangers', cursive; letter-spacing: 2px;">View <i class="fas fa-plus"></i></a>
+                        </div>
+                         <div style="height:1px; background-color:rgba(220,220,220,0.8); width:70%; margin:5px auto; "> </div>
+                        <div style="text-align:center;">   
+                            <select name ="lists" style="margin-left:20px; border:0px; padding:9px; border-radius:5px">
+                                    {% for i in lists %}
+                                        <option value="{{ i.id }}">{{ i.title }}</option>
+                                    {% endfor %}
+                                    </select>
+                                    <button type="submit" class="btn text-primary" name="add_list" style="font-family: 'Bangers', cursive; letter-spacing: 2px;">Add to list</button>
+                        </div>
+                    </div>
+                    </form>
+                </div>{# end div.card .col #}
+                <div class="col-1"></div>
+            {# -------------------- end of bootstrap card -------------------- #}
+        {% endfor %}
+    </div>
+     
+{% endblock %}
+
+
+    
+
+
+    
+
+
+

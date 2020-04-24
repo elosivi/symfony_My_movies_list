@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}My Friends{% endblock %}
+
+  {# ------------------------------------------------------------- H 1 ----------------------------------------------------------------------------------------- #}
+
+{% block h1 %}
+    <h1 >All my Friends and users :</h1>
+{% endblock %}
+
+  {# ------------------------------------------------------------- B O D Y ----------------------------------------------------------------------------------------- #}
+{% block body %}
+
+    <div class="shadow-lg" style="padding:20px ">
+    <h2 style="font-family: 'Bangers', cursive; letter-spacing: 2px; color:rgb(0,105,217);">My friends:</h2>
+        <ul>
+            {% for friend in friends %}
+                <li style="list-style: none;"> 
+                    <i class="far fa-user" style="margin-right:10px;"></i> 
+                    {{friend.name}} ..........
+                    <a href= {{ path('remove_friend', { 'friend_id': friend.id }) }} style="font-size:0.7rem;">( REMOVE )</a>
+                </li>
+            {% endfor %}
+        </ul>
+
+        <div style="height:1px; background-color:rgba(120,120,120,0.5);margin-bottom:20px"></div>
+
+        <form action="/friends" method="post">
+            <input type="text" name="searched_friend" id="searched_friend">
+            <input type="submit" value="SEARCH FRIENDS" name="search_button" class="btn-primary" style="font-family: 'Bangers', cursive; letter-spacing: 2px; ">
+        </form>
+    </div>
+
+    <div style="height:30px;"></div>
+
+    <div class="shadow-lg" style="padding:20px ">
+        <h2 style="font-family: 'Bangers', cursive; letter-spacing: 2px; color:rgb(0,105,217);">User(s) :</h2>
+        <ul>
+            {% for user in users %}
+                <li style="list-style: none;" > 
+                    <i class="far fa-user"></i> 
+                    {{user.name}} .......... 
+                    <a href= {{ path('add_friend', { 'friend_id': user.id }) }} style="font-size:0.7rem;">
+                    <i class="fas fa-plus-circle"></i>
+                    ADD AS FRIEND</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+{% endblock %}

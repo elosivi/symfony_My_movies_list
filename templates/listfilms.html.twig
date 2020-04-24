@@ -1,0 +1,131 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}My Movies! FILMS LIST{% endblock %}
+
+
+
+    {# ------------------------------------------------------------- H 1 ----------------------------------------------------------------------------------------- #}
+
+{% block h1 %}
+    
+   
+    {% if user is defined and user is not null %}
+       <h1 class="font-weight-bold"> FILMS LIST FOR <span style="color:rgb(0,105,217);">{{ user }}</span></h1>
+    {% else %}
+        <h1> VISITOR, you need to <href="{{ path('login') }}">log you</a> !</h1>
+    {% endif %}
+    
+
+{% endblock %}
+    
+    {# ------------------------------------------------------------- B O D Y ----------------------------------------------------------------------------------------- #}  
+     {% block body2 %}
+      {# ------------------------------------------------------------- my lists ----------------------------------------------------------------------------------------- #}  
+   
+    <h2 style="font-family: 'Bangers', cursive; letter-spacing: 2px; color:rgb(0,105,217);"> My lists...</h2>
+    <div class="shadow-lg" style="padding:20px;">
+        {% if listings %}
+            <div class="accordion" id="accordionExample">
+                {% for listing in listings %}
+                    {# list name  + bouton remove #}
+                    <div class="card">
+                        <div class="card-header d-flex" id="headingOne" style=" background: linear-gradient(70deg,rgba(120,120,120,0.7), rgba(200,200,200,0.7));">
+                            <h3 class="mb-0 mr-auto " >
+                                <i class="fas fa-film" style="color:white; "></i>
+                                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne{{listing.id}}" aria-expanded="true" aria-controls="collapseOne" style="color:rgb(0,105,217); font-size:1.5rem; font-weight:bold; border-left:1px solid rgba(240,240,240,1);">
+                                    {% if user.id == listing.owner_id%}
+                                        {{ listing.title }} (owner)
+                                    {% else %}
+                                        {{ listing.title }}
+                                    {% endif %}
+                                </button>
+                                
+                            </h3>
+                                
+                                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#shareWith{{listing.id}}" aria-expanded="true" aria-controls="collapseOne" style="color:white; font-size:1.5rem; border-left:1px solid rgba(120,120,120,0.7);"> <i class="fas fa-users"></i> Share with friends <i class="fas fa-caret-right"></i></button>
+                                <div id="shareWith{{listing.id}}" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample" style="border-right:1px solid rgba(120,120,120,0.7);">
+                                    {% for friend in friends %}
+                                    <a class="btn btn-dark" href="share/{{listing.id}}/{{friend.id}}" role="button" style="margin-right:10px;">{{friend.name}}</a>
+                                    {% endfor %}
+                                </div>
+                                <a class="  btn btn-light" href="remove/{{listing.id}}" role="button" style="font-family: 'Bangers', cursive; letter-spacing: 2px; margin-left:20px; ">Delete list</a>
+                        </div>
+                        {# collapse content #}
+                        <div id="collapseOne{{listing.id}}" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample" style="">
+                            <div class="card-body">
+                                <ul class="list-unstyled">
+                                
+                                    <div class="row"  style="margin:auto; justify_content:space-around; padding:10px; background-color:rgb(232, 227, 227);">
+                                        {% for movie in listing.movies %}
+
+                                            {# --------------------one bootstrap card -------------------- #}
+                                            <div class="card col-3 shadow-sm" style="width: 18rem; margin-bottom: 5px; padding: 5px;">
+                                                <div class="d-flex flex-row">
+                                                    <div class="p-2">
+                                                        {% if movie.poster %}
+                                                        <img class="card-img-top" src="{{movie.poster}}" alt="Card image cap" style="width:100px;">
+                                                        {% else %}
+                                                        <img class="card-img-top" src="http://via.placeholder.com/300x423" alt="Card image cap" style="width:100px;">
+                                                        {% endif %}
+                                                    </div>
+                                                    <div class="card-body p-2" style="display:block; width:65%;">
+                                                        <h5 class="card-title" style="font-weight:bold; text-align:center">{{movie.title}}</h5>
+                                                        <div style="height:1px; background-color:rgba(26,62,242,0.8); width:70%; margin:5px auto; "> </div>
+                                                        <p class="card-text"><span style="font-weight:bold">Year : </span>{{movie.year}}</p>
+                                                        <p class="card-text"><span style="font-weight:bold">Imdb : </span>{{movie.imdb_id}}</p>
+                                                    </div>
+                                                </div>
+                                                <div style="height:10px;"></div>
+                                                <div style="height:10px; border-top: 1px solid grey"></div>
+                                                <div class="mx-auto">
+                                                    <a href="movie/{{movie.id}}" class="btn btn-light text-primary" style="font-family: 'Bangers', cursive; letter-spacing: 2px;">View</a>
+                                                    <a href="removefromlist/{{listing.id}}/{{movie.id}}" class="btn btn-light text-primary" style="font-family: 'Bangers', cursive; letter-spacing: 2px;">Remove</a>
+                                                </div>
+                                            </div>{# end div.card .col #}
+                                            
+                                            <div class="col-1"></div>
+                                            {# -------------------- end of bootstrap card -------------------- #}
+                                        {% endfor %}
+                                    </div> {# end div.row #}
+                                </ul>
+                            </div>
+                        </div>{# end div.collapse #}
+                        
+                    </div> {# end div .card #}   
+                {% endfor %}
+            </div>
+        {% else %}
+            <h2 style="font-family: 'Bangers', cursive; letter-spacing: 2px;"> No list found, create one ! </h2>
+        {% endif %}
+
+    
+  
+{# -------------------------------------------------------------- add films -------------------------------------------------------------------- #}
+    <div style="height:40px;"></div>
+     <a class="nav-link btn btn-light" href="{{ path('search') }}" style="font-family: 'Bangers', cursive; letter-spacing: 2px;color:rgb(0,105,217);" > <i class="fas fa-search" style="margin-right:20px;"></i>Search Films</a>
+    </div>  
+{# -------------------------------------------------------------- add list -------------------------------------------------------------------- #}
+    <div style="height:40px;"></div>
+
+    <h2 style="font-family: 'Bangers', cursive; letter-spacing: 2px;color:rgb(0,105,217);"> A new list ?</h2>
+    <form action="/lists" method="post">
+        <div class="input-group input-group-lg shadow-lg" id="add_list">
+            
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="inputGroup-sizing-lg">Create your new list ...</span>
+                </div>
+                <input type="text"  name="new_list_name" id="new_list_name" placeholder="List name" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" name="new_list_name" id="new_list_name" placeholder="List name">
+                <button type="submit" class="btn btn-lg btn-primary " name="add_list" style="font-family: 'Bangers', cursive; letter-spacing: 2px;">ADD LIST</button>
+    
+        </div>
+    </form>
+    <div style="height:20px;"></div>
+
+{% endblock %}
+    
+
+
+  
+
+
+
